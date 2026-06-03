@@ -12,7 +12,12 @@
 
   boot.lanzaboote = {
     enable = true;
-    pkiBundle = "/etc/secureboot";
+    pkiBundle = "/var/lib/sbctl";
+    autoGenerateKeys.enable = true;
+    autoEnrollKeys = {
+      enable = true;
+      includeMicrosoftKeys = true;
+    };
   };
 
   boot.initrd.systemd.enable = true;
@@ -21,10 +26,6 @@
     "virtio_blk" "virtio_pci"
     "tpm_tis" "tpm_crb"
   ];
-
-  boot.initrd.luks.devices."cryptroot" = {
-    device = "/dev/disk/by-partlabel/root";
-  };
 
   users.users.${username} = {
     isNormalUser = true;
@@ -40,5 +41,5 @@
     tpm2-tools
   ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
