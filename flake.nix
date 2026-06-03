@@ -10,16 +10,21 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, ... }:
+  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, ... }:
   let
     mkHost = { hostname, username, extraModules ? [] }:
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = { inherit hostname username; };
-        modules = [ 
+        modules = [
+          lanzaboote.nixosModules.lanzaboote
           disko.nixosModules.disko
           ./hosts/${hostname}/disk-config.nix
           ./hosts/${hostname}/configuration.nix
