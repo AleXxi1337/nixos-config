@@ -30,7 +30,7 @@ ls /sys/firmware/efi  # must exist
 
 ```bash
 nix-shell -p git
-git clone https://github.com/YOUR_USERNAME/nixos-config
+git clone https://github.com/AleXxi1337/nixos-config
 cd nixos-config
 ```
 
@@ -42,22 +42,30 @@ lsblk
 
 If your disk is not `/dev/vda`, edit [hosts/desktop/disk-config.nix](hosts/desktop/disk-config.nix) and change the `device` field.
 
-### 4. Partition, format and install
+### 4. Partition and format
 
-One command handles everything — disko partitions the disk, formats LUKS+Btrfs, and runs nixos-install:
+Disko partitions the disk and mounts the filesystems under `/mnt`:
 
 ```bash
 sudo nix --experimental-features "nix-command flakes" \
-  run github:nix-community/disko#disko-install -- \
-  --flake .#desktop \
-  --disk main /dev/vda
+  run github:nix-community/disko -- \
+  --mode destroy,format,mount \
+  --flake .#desktop
 ```
 
 You will be prompted to set a **LUKS passphrase** — save it, it's needed until TPM2 is enrolled.
 
 > **Warning:** this will wipe the disk completely.
 
-### 5. Set user password
+### 5. Install NixOS
+
+Install directly to `/mnt/nix/store` — avoids filling up `/tmp/.nix-store` on the live ISO:
+
+```bash
+sudo nixos-install --flake .#desktop --no-root-passwd
+```
+
+### 6. Set user password
 
 ```bash
 sudo nixos-enter --root /mnt
@@ -65,7 +73,7 @@ passwd user
 exit
 ```
 
-### 6. Reboot
+### 7. Reboot
 
 Remove the ISO and reboot. Enter the LUKS passphrase when prompted.
 

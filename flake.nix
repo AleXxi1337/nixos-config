@@ -33,7 +33,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${username} = import ./home/myuser.nix;
+            home-manager.users.${username} = import ./home/${username}.nix;
             home-manager.extraSpecialArgs = { inherit username; };
           }
         ] ++ extraModules;
