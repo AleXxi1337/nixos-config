@@ -1,8 +1,0 @@
-[Plymouth Theme]
-Name=NixOS Snowflake
-Description=NixOS themed boot splash with snowflake logo
-ModuleName=script
-
-[script]
-ImageDir=%plymouth:theme-path%
-ScriptFile=%plymouth:theme-path%/nixos-snowflake.script
