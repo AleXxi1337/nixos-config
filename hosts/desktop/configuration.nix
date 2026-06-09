@@ -22,6 +22,11 @@
 
   boot.initrd.systemd.enable = true;
 
+  boot.plymouth.enable = true;
+  boot.kernelParams = [ "quiet" "splash" ];
+  boot.initrd.verbose = false;
+  boot.consoleLogLevel = 0;
+
   boot.initrd.availableKernelModules = [
     "virtio_blk" "virtio_pci"
     "tpm_tis" "tpm_crb"
