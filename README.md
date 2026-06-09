@@ -70,7 +70,7 @@ You will be prompted to set a **LUKS passphrase** — save it, it's needed until
 Install directly to `/mnt/nix/store` — avoids filling up `/tmp/.nix-store` on the live ISO:
 
 ```bash
-sudo nixos-install --flake .#desktop --no-root-passwd
+sudo nixos-install --flake .#desktop
 ```
 
 ### 7. Reboot
