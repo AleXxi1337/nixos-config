@@ -42,7 +42,15 @@ lsblk
 
 If your disk is not `/dev/vda`, edit [hosts/desktop/disk-config.nix](hosts/desktop/disk-config.nix) and change the `device` field.
 
-### 4. Partition and format
+### 4. Expand nix store tmpfs
+
+The live ISO mounts `/nix/store` on a small tmpfs. Expand it before downloading anything, otherwise you'll get "No space left on device":
+
+```bash
+sudo mount -o remount,size=8G /nix/.rw-store
+```
+
+### 5. Partition and format
 
 Disko partitions the disk and mounts the filesystems under `/mnt`:
 
@@ -57,20 +65,12 @@ You will be prompted to set a **LUKS passphrase** — save it, it's needed until
 
 > **Warning:** this will wipe the disk completely.
 
-### 5. Install NixOS
+### 6. Install NixOS
 
 Install directly to `/mnt/nix/store` — avoids filling up `/tmp/.nix-store` on the live ISO:
 
 ```bash
 sudo nixos-install --flake .#desktop --no-root-passwd
-```
-
-### 6. Set user password
-
-```bash
-sudo nixos-enter --root /mnt
-passwd user
-exit
 ```
 
 ### 7. Reboot
