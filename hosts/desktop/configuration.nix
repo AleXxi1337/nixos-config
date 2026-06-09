@@ -22,7 +22,11 @@
 
   boot.initrd.systemd.enable = true;
 
-  boot.plymouth.enable = true;
+  boot.plymouth = {
+    enable = true;
+    theme = "nixos-bgrt";
+    themePackages = [ pkgs.nixos-bgrt-plymouth ];
+  };
   boot.kernelParams = [
     "quiet" "splash"
     "rd.systemd.show_status=false"
