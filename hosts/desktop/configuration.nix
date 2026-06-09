@@ -23,9 +23,18 @@
   boot.initrd.systemd.enable = true;
 
   boot.plymouth.enable = true;
-  boot.kernelParams = [ "quiet" "splash" ];
+  boot.kernelParams = [
+    "quiet" "splash"
+    "rd.systemd.show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
+    "vt.global_cursor_default=0"
+  ];
   boot.initrd.verbose = false;
   boot.consoleLogLevel = 0;
+  boot.loader.timeout = 0;
+
+  systemd.extraConfig = "ShowStatus=no";
 
   boot.initrd.availableKernelModules = [
     "virtio_blk" "virtio_pci"
