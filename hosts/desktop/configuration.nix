@@ -24,8 +24,8 @@
 
   boot.plymouth = {
     enable = true;
-    theme = "nixos-bgrt";
-    themePackages = [ pkgs.nixos-bgrt-plymouth ];
+    theme = "nixos-snowflake";
+    themePackages = [ (pkgs.callPackage ../../modules/plymouth-theme {}) ];
   };
   boot.kernelParams = [
     "quiet" "splash"

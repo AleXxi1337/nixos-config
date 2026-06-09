@@ -1,0 +1,29 @@
+Window.SetBackgroundTopColor(0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
+
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+
+logo_image = Image("logo.png");
+logo_sprite = Sprite(logo_image);
+logo_sprite.SetX(screen_width / 2 - logo_image.GetWidth() / 2);
+logo_sprite.SetY(screen_height / 2 - logo_image.GetHeight() / 2 - 50);
+logo_sprite.SetZ(10);
+
+spinner_image = Image("spinner.png");
+spinner_sprite = Sprite();
+spinner_sprite.SetX(screen_width / 2 - spinner_image.GetWidth() / 2);
+spinner_sprite.SetY(screen_height / 2 + logo_image.GetHeight() / 2 - 10);
+spinner_sprite.SetZ(10);
+
+angle = 0;
+
+fun refresh_callback() {
+    global angle;
+    angle = angle + 0.1;
+    if (angle >= 6.28318)
+        angle = 0;
+    spinner_sprite.SetImage(spinner_image.Rotate(angle));
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
