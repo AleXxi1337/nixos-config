@@ -34,7 +34,7 @@
   boot.consoleLogLevel = 0;
   boot.loader.timeout = 0;
 
-  systemd.extraConfig = "ShowStatus=no";
+  systemd.settings.Manager.ShowStatus = "no";
 
   boot.initrd.availableKernelModules = [
     "virtio_blk" "virtio_pci"
