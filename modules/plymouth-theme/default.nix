@@ -15,7 +15,7 @@ pkgs.stdenvNoCC.mkDerivation {
       cat > frame.svg << EOF
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48">
   <path d="M 24 3 A 21 21 0 1 1 45 24" fill="none" stroke="white"
-        stroke-width="4" stroke-linecap="round" transform="rotate(${angle},24,24)"/>
+        stroke-width="4" stroke-linecap="round" transform="rotate(''${angle},24,24)"/>
 </svg>
 EOF
       rsvg-convert -w 48 -h 48 frame.svg -o throbber-$(printf '%04d' $i).png
