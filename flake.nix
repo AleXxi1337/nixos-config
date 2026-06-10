@@ -45,6 +45,10 @@
         hostname = "desktop";
         username = "user";
       };
+      thinkpad = mkHost {
+        hostname = "thinkpad";
+        username = "user";
+      };
     };
   };
 }
