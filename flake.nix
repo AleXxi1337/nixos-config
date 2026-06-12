@@ -29,6 +29,7 @@
           ./hosts/${hostname}/disk-config.nix
           ./hosts/${hostname}/configuration.nix
           ./modules/common.nix
+          ./modules/base.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
