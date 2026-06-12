@@ -18,8 +18,20 @@
       Mod+Shift+Down  { move-window-down; }
       Mod+Shift+Up    { move-window-up; }
 
-      Mod+Ctrl+Left  { focus-workspace-left; }
-      Mod+Ctrl+Right { focus-workspace-right; }
+      Mod+Ctrl+Up   { focus-workspace-up; }
+      Mod+Ctrl+Down { focus-workspace-down; }
+
+      Mod+1 { focus-workspace 1; }
+      Mod+2 { focus-workspace 2; }
+      Mod+3 { focus-workspace 3; }
+      Mod+4 { focus-workspace 4; }
+      Mod+5 { focus-workspace 5; }
+
+      Mod+Shift+1 { move-window-to-workspace 1; }
+      Mod+Shift+2 { move-window-to-workspace 2; }
+      Mod+Shift+3 { move-window-to-workspace 3; }
+      Mod+Shift+4 { move-window-to-workspace 4; }
+      Mod+Shift+5 { move-window-to-workspace 5; }
 
       Mod+F { fullscreen-window; }
       Mod+M { maximize-column; }
