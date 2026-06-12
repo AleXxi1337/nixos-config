@@ -26,7 +26,16 @@ Download from [nixos.org/download](https://nixos.org/download). Boot in UEFI mod
 ls /sys/firmware/efi  # must exist
 ```
 
-### 2. Get the config
+### 2. Connect to the internet
+
+Ethernet connects automatically. For Wi-Fi:
+
+```bash
+nmcli device wifi list
+nmcli device wifi connect "SSID" password "password"
+```
+
+### 3. Get the config
 
 ```bash
 nix-shell -p git
@@ -34,7 +43,7 @@ git clone https://github.com/AleXxi1337/nixos-config
 cd nixos-config
 ```
 
-### 3. Check disk name
+### 4. Check disk name
 
 ```bash
 lsblk
@@ -42,7 +51,7 @@ lsblk
 
 If your disk is not `/dev/vda`, edit [hosts/desktop/disk-config.nix](hosts/desktop/disk-config.nix) and change the `device` field.
 
-### 4. Expand nix store tmpfs
+### 5. Expand nix store tmpfs
 
 The live ISO mounts `/nix/store` on a small tmpfs. Expand it before downloading anything, otherwise you'll get "No space left on device":
 
@@ -50,7 +59,7 @@ The live ISO mounts `/nix/store` on a small tmpfs. Expand it before downloading 
 sudo mount -o remount,size=8G /nix/.rw-store
 ```
 
-### 5. Partition and format
+### 6. Partition and format
 
 Disko partitions the disk and mounts the filesystems under `/mnt`:
 
@@ -65,7 +74,7 @@ You will be prompted to set a **LUKS passphrase** — save it, it's needed until
 
 > **Warning:** this will wipe the disk completely.
 
-### 6. Install NixOS
+### 7. Install NixOS
 
 Install directly to `/mnt/nix/store` — avoids filling up `/tmp/.nix-store` on the live ISO:
 
@@ -73,7 +82,7 @@ Install directly to `/mnt/nix/store` — avoids filling up `/tmp/.nix-store` on 
 sudo nixos-install --flake .#desktop
 ```
 
-### 7. Reboot
+### 8. Reboot
 
 Remove the ISO and reboot. Enter the LUKS passphrase when prompted.
 
