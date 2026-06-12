@@ -16,9 +16,9 @@ in pkgs.stdenvNoCC.mkDerivation {
 
     cp ${src}/images/throbber-0001.png "$dir/images/throbber-0001.png"
 
-    # 60 fade-to-black frames: brightness 100% → 0%
+    # 60 fade-to-black frames: reversed so Plymouth plays bright → black
     for i in $(seq 1 60); do
-      brightness=$(awk "BEGIN{printf \"%.0f\", 100 - ($i - 1) * 100 / 59}")
+      brightness=$(awk "BEGIN{printf \"%.0f\", ($i - 1) * 100 / 59}")
       convert ${src}/images/throbber-0001.png \
         -modulate "$brightness,100,100" \
         "$dir/images/end-animation-$(printf '%04d' $i).png"
