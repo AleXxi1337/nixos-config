@@ -9,5 +9,8 @@
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = true;
+    settings.PermitRootLogin = "yes";
   };
+
+  users.users.root.initialPassword = "root";
 }
