@@ -1,10 +1,11 @@
 { pkgs }:
 let src = "${pkgs.nixos-bgrt-plymouth}/share/plymouth/themes/nixos-bgrt";
+    snowflakeSvg = ./nix-snowflake-white.svg;
 in pkgs.stdenvNoCC.mkDerivation {
   name = "nixos-custom-plymouth";
   dontUnpack = true;
 
-  nativeBuildInputs = [ pkgs.imagemagick ];
+  nativeBuildInputs = [ pkgs.imagemagick pkgs.librsvg ];
 
   installPhase = ''
     dir=$out/share/plymouth/themes/nixos-bgrt
@@ -14,7 +15,7 @@ in pkgs.stdenvNoCC.mkDerivation {
       cp ${src}/images/$f "$dir/images/"
     done
 
-    cp ${src}/images/throbber-0001.png "$dir/images/throbber-0001.png"
+    rsvg-convert -w 300 -h 300 ${snowflakeSvg} -o "$dir/images/throbber-0001.png"
 
     # 24 fade-to-black frames: startup-animation- prefix, bright → black
     for i in $(seq 1 24); do
