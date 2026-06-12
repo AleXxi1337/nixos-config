@@ -1,5 +1,7 @@
 { pkgs, hostname, username, ... }:
 {
+  hardware.enableRedistributableFirmware = true;
+
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
 
