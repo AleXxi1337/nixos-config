@@ -1,34 +1,34 @@
-{ username, config, ... }:
+{ username, ... }:
 {
   home.username = username;
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
 
-  programs.niri.settings = {
-    prefer-no-csd = true;
+  xdg.configFile."niri/config.kdl".text = ''
+    prefer-no-csd
 
-    binds = with config.lib.niri.actions; {
-      "Mod+T".action        = spawn "kitty";
-      "Mod+Q".action        = close-window;
-      "Mod+Shift+E".action  = quit;
+    binds {
+      Mod+T { spawn "kitty"; }
+      Mod+Q { close-window; }
+      Mod+Shift+E { quit; }
 
-      "Mod+Left".action       = focus-column-left;
-      "Mod+Right".action      = focus-column-right;
-      "Mod+Down".action       = focus-window-down;
-      "Mod+Up".action         = focus-window-up;
+      Mod+Left  { focus-column-left; }
+      Mod+Right { focus-column-right; }
+      Mod+Down  { focus-window-down; }
+      Mod+Up    { focus-window-up; }
 
-      "Mod+Shift+Left".action  = move-column-left;
-      "Mod+Shift+Right".action = move-column-right;
-      "Mod+Shift+Down".action  = move-window-down;
-      "Mod+Shift+Up".action    = move-window-up;
+      Mod+Shift+Left  { move-column-left; }
+      Mod+Shift+Right { move-column-right; }
+      Mod+Shift+Down  { move-window-down; }
+      Mod+Shift+Up    { move-window-up; }
 
-      "Mod+Ctrl+Left".action  = focus-workspace-left;
-      "Mod+Ctrl+Right".action = focus-workspace-right;
+      Mod+Ctrl+Left  { focus-workspace-left; }
+      Mod+Ctrl+Right { focus-workspace-right; }
 
-      "Mod+F".action = fullscreen-window;
-      "Mod+M".action = maximize-column;
-    };
-  };
+      Mod+F { fullscreen-window; }
+      Mod+M { maximize-column; }
+    }
+  '';
 
   programs.kitty.enable = true;
 }
