@@ -16,9 +16,9 @@ in pkgs.stdenvNoCC.mkDerivation {
 
     cp ${src}/images/throbber-0001.png "$dir/images/throbber-0001.png"
 
-    # 60 fade-to-black frames: startup-animation- prefix, bright → black
-    for i in $(seq 1 60); do
-      brightness=$(awk "BEGIN{printf \"%.0f\", 100 - ($i - 1) * 100 / 59}")
+    # 24 fade-to-black frames: startup-animation- prefix, bright → black
+    for i in $(seq 1 24); do
+      brightness=$(awk "BEGIN{printf \"%.0f\", 100 - ($i - 1) * 100 / 23}")
       convert ${src}/images/throbber-0001.png \
         -modulate "$brightness,100,100" \
         "$dir/images/startup-animation-$(printf '%04d' $i).png"
