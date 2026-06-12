@@ -36,6 +36,8 @@
     hashedPassword = "$6$A1/5sUrpBBWII0Bb$7jeNdGgdzDDjbjnzHKT3F9MAeeNWOHV72eCF0n/JMDUkCaorJlWHm9xz03QvnuQtBpes5BBP36S.5WE/kpdeM/";
   };
 
+  programs.niri.enable = true;
+
   environment.systemPackages = with pkgs; [
     git vim wget curl
   ];
