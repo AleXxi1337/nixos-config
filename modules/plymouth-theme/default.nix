@@ -35,17 +35,17 @@ s.SetY(sh / 2 - img.GetHeight() / 2);
 s.SetZ(10);
 
 t        = 0;
-quitting = 0;
 opacity  = 1.0;
+progress = 0;
 
-fun quit_callback() {
-    quitting = 1;
+fun boot_progress_callback(duration, p) {
+    progress = p;
 }
 
 fun refresh_callback() {
     t = t + 1;
 
-    if (quitting == 1) {
+    if (progress >= 1.0) {
         opacity = opacity - 0.04;
         if (opacity < 0) opacity = 0;
         s.SetOpacity(opacity);
@@ -54,7 +54,7 @@ fun refresh_callback() {
     }
 }
 
-Plymouth.SetQuitTransition(quit_callback, 1000);
+Plymouth.SetBootProgressFunction(boot_progress_callback);
 Plymouth.SetRefreshFunction(refresh_callback);
 EOF
   '';
