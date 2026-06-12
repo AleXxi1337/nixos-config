@@ -7,18 +7,9 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
-    autoGenerateKeys.enable = true;
-    autoEnrollKeys = {
-      enable = true;
-      includeMicrosoftKeys = true;
-    };
-  };
+  boot.loader.timeout = 0;
 
   boot.initrd.systemd.enable = true;
 
@@ -36,13 +27,11 @@
   ];
   boot.initrd.verbose = false;
   boot.consoleLogLevel = 0;
-  boot.loader.timeout = 0;
 
   systemd.settings.Manager.ShowStatus = "no";
 
   boot.initrd.availableKernelModules = [
-    "nvme" "xhci_pci" "ahci" "usb_storage"
-    "tpm_tis" "tpm_crb"
+    "virtio_blk" "virtio_pci"
   ];
 
   users.users.root.hashedPassword = "$6$A1/5sUrpBBWII0Bb$7jeNdGgdzDDjbjnzHKT3F9MAeeNWOHV72eCF0n/JMDUkCaorJlWHm9xz03QvnuQtBpes5BBP36S.5WE/kpdeM/";
@@ -58,8 +47,6 @@
     vim
     wget
     curl
-    sbctl
-    tpm2-tools
   ];
 
   system.stateVersion = "25.11";

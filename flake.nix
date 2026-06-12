@@ -49,6 +49,10 @@
         hostname = "thinkpad";
         username = "user";
       };
+      vm = mkHost {
+        hostname = "vm";
+        username = "user";
+      };
     };
   };
 }
