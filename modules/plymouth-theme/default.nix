@@ -4,6 +4,8 @@ in pkgs.stdenvNoCC.mkDerivation {
   name = "nixos-custom-plymouth";
   dontUnpack = true;
 
+  nativeBuildInputs = [ pkgs.imagemagick ];
+
   installPhase = ''
     dir=$out/share/plymouth/themes/nixos-bgrt
     mkdir -p "$dir/images"
@@ -14,12 +16,46 @@ in pkgs.stdenvNoCC.mkDerivation {
 
     cp ${src}/images/throbber-0001.png "$dir/images/throbber-0001.png"
 
-    cp ${src}/nixos-bgrt.plymouth "$dir/"
-    sed -i \
-      -e 's/UseFirmwareBackground=true/UseFirmwareBackground=false/g' \
-      -e "s|ImageDir=.*|ImageDir=$dir/images|g" \
-      -e 's/VerticalAlignment=.8/VerticalAlignment=.5/g' \
-      -e 's/DialogVerticalAlignment=.8/DialogVerticalAlignment=.5/g' \
-      "$dir/nixos-bgrt.plymouth"
+    # 60 fade-to-black frames: brightness 100% → 0%
+    for i in $(seq 1 60); do
+      brightness=$(awk "BEGIN{printf \"%.0f\", 100 - ($i - 1) * 100 / 59}")
+      convert ${src}/images/throbber-0001.png \
+        -modulate "$brightness,100,100" \
+        "$dir/images/end-animation-$(printf '%04d' $i).png"
+    done
+
+    cat > "$dir/nixos-bgrt.plymouth" << EOF
+[Plymouth Theme]
+Name=NixOS Custom
+Description=NixOS splash, black background with fade-to-black
+ModuleName=two-step
+
+[two-step]
+Font=Cantarell 20
+ImageDir=$dir/images
+DialogHorizontalAlignment=.5
+DialogVerticalAlignment=.5
+HorizontalAlignment=.5
+VerticalAlignment=.5
+Transition=none
+TransitionDuration=0.0
+BackgroundStartColor=0x000000
+BackgroundEndColor=0x000000
+ProgressBarBackgroundColor=0x606060
+ProgressBarForegroundColor=0xffffff
+MessageBelowAnimation=true
+
+[boot-up]
+UseEndAnimation=true
+UseFirmwareBackground=false
+
+[shutdown]
+UseEndAnimation=false
+UseFirmwareBackground=false
+
+[reboot]
+UseEndAnimation=false
+UseFirmwareBackground=false
+EOF
   '';
 }
