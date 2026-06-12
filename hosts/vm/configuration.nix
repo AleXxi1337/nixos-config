@@ -5,4 +5,9 @@
   boot.initrd.availableKernelModules = [
     "virtio_blk" "virtio_pci"
   ];
+
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = true;
+  };
 }
