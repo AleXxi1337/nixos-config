@@ -17,14 +17,7 @@
   boot.plymouth = {
     enable = true;
     theme = "nixos-bgrt";
-    themePackages = [
-      (pkgs.nixos-bgrt-plymouth.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          sed -i 's/UseFirmwareBackground=true/UseFirmwareBackground=false/g' \
-            $out/share/plymouth/themes/nixos-bgrt/nixos-bgrt.plymouth
-        '';
-      }))
-    ];
+    themePackages = [ (pkgs.callPackage ./plymouth-theme {}) ];
   };
   boot.kernelParams = [
     "quiet" "splash"
