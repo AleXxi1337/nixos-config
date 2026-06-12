@@ -5,57 +5,38 @@ pkgs.stdenvNoCC.mkDerivation {
 
   installPhase = ''
     dir=$out/share/plymouth/themes/nixos-minimal
-    mkdir -p "$dir"
+    mkdir -p "$dir/images"
 
-    cp ${pkgs.nixos-bgrt-plymouth}/share/plymouth/themes/nixos-bgrt/images/throbber-0001.png \
-       "$dir/snowflake.png"
+    cp ${pkgs.nixos-bgrt-plymouth}/share/plymouth/themes/nixos-bgrt/images/throbber-*.png \
+       "$dir/images/"
 
     cat > "$dir/nixos-minimal.plymouth" << 'EOF'
 [Plymouth Theme]
 Name=NixOS Minimal
-Description=NixOS boot splash, black background with fade
-ModuleName=script
+Description=NixOS boot splash, black background
+ModuleName=two-step
 
-[script]
-ImageDir=%plymouth:theme-path%
-ScriptFile=%plymouth:theme-path%/nixos-minimal.script
-EOF
+[two-step]
+ImageDir=%plymouth:theme-path%/images
+HorizontalAlignment=.5
+VerticalAlignment=.5
+Transition=none
+TransitionDuration=0.0
+BackgroundStartColor=0x000000
+BackgroundEndColor=0x000000
+MessageBelowAnimation=true
 
-    cat > "$dir/nixos-minimal.script" << 'EOF'
-Window.SetBackgroundTopColor(0, 0, 0);
-Window.SetBackgroundBottomColor(0, 0, 0);
+[boot-up]
+UseEndAnimation=false
+UseFirmwareBackground=false
 
-sw = Window.GetWidth();
-sh = Window.GetHeight();
+[shutdown]
+UseEndAnimation=false
+UseFirmwareBackground=false
 
-img = Image("snowflake.png");
-s   = Sprite(img);
-s.SetX(sw / 2 - img.GetWidth()  / 2);
-s.SetY(sh / 2 - img.GetHeight() / 2);
-s.SetZ(10);
-
-t        = 0;
-opacity  = 1.0;
-progress = 0;
-
-fun boot_progress_callback(duration, p) {
-    progress = p;
-}
-
-fun refresh_callback() {
-    t = t + 1;
-
-    if (progress >= 1.0) {
-        opacity = opacity - 0.04;
-        if (opacity < 0) opacity = 0;
-        s.SetOpacity(opacity);
-    } else {
-        s.SetOpacity(0.6 + Math.Sin(t * 0.08) * 0.4);
-    }
-}
-
-Plymouth.SetBootProgressFunction(boot_progress_callback);
-Plymouth.SetRefreshFunction(refresh_callback);
+[reboot]
+UseEndAnimation=false
+UseFirmwareBackground=false
 EOF
   '';
 }
