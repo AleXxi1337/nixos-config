@@ -17,7 +17,7 @@
     "tpm_tis" "tpm_crb"
   ];
 
-  boot.initrd.kernelModules = [ "i915" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   environment.systemPackages = with pkgs; [
     sbctl tpm2-tools
