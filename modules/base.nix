@@ -21,6 +21,7 @@
   };
   boot.kernelParams = [
     "quiet" "splash"
+    "systemd.show_status=false"
     "rd.systemd.show_status=false"
     "rd.udev.log_level=3"
     "udev.log_priority=3"
@@ -29,6 +30,7 @@
   boot.consoleLogLevel = 0;
 
   systemd.settings.Manager.ShowStatus = "no";
+  services.journald.extraConfig = "ForwardToConsole=no";
 
   users.users.${username} = {
     isNormalUser = true;
