@@ -30,6 +30,9 @@
 
   systemd.settings.Manager.ShowStatus = "no";
 
+  systemd.services.plymouth-quit.serviceConfig.ExecStartPre =
+    "${pkgs.coreutils}/bin/sleep 1";
+
   users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
