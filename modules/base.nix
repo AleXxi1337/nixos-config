@@ -43,7 +43,7 @@
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${pkgs.bash}/bin/sh -c 'exec ${pkgs.niri}/bin/niri-session > /dev/null 2>&1'";
+      command = "${pkgs.niri}/bin/niri-session";
       user = username;
     };
   };
