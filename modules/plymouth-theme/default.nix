@@ -51,11 +51,11 @@ UseEndAnimation=true
 UseFirmwareBackground=false
 
 [shutdown]
-UseEndAnimation=false
+UseEndAnimation=true
 UseFirmwareBackground=false
 
 [reboot]
-UseEndAnimation=false
+UseEndAnimation=true
 UseFirmwareBackground=false
 EOF
   '';
