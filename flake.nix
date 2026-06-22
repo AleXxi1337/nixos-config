@@ -14,13 +14,9 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, niri, ... }:
+  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, ... }:
   let
     mkHost = { hostname, username, extraModules ? [] }:
       nixpkgs.lib.nixosSystem {
@@ -40,7 +36,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.${username} = import ./home/${username}.nix;
             home-manager.extraSpecialArgs = { inherit username; };
-            home-manager.sharedModules = [ niri.homeModules.niri ];
+            home-manager.sharedModules = [];
           }
         ] ++ extraModules;
       };
