@@ -38,7 +38,13 @@
   };
 
   programs.hyprland.enable = true;
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      xorg.libxcb
+      xorg.xcbutilcursor
+    ];
+  };
 
   services.greetd = {
     enable = true;
