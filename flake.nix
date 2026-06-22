@@ -14,9 +14,13 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    happ-nixos = {
+      url = "github:MrShitFox/happ-nixos";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, ... }:
+  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, happ-nixos, ... }:
   let
     mkHost = { hostname, username, extraModules ? [] }:
       nixpkgs.lib.nixosSystem {
@@ -50,6 +54,7 @@
       thinkpad = mkHost {
         hostname = "thinkpad";
         username = "user";
+        extraModules = [ "${happ-nixos}/happ-module.nix" ];
       };
       vm = mkHost {
         hostname = "vm";

@@ -19,6 +19,8 @@
 
   boot.initrd.kernelModules = [ "amdgpu" ];
 
+  services.happ.enable = true;
+
   environment.systemPackages = with pkgs; [
     sbctl tpm2-tools
   ];
