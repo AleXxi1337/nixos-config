@@ -38,13 +38,7 @@
   };
 
   programs.hyprland.enable = true;
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      xorg.libxcb
-      xorg.xcbutilcursor
-    ];
-  };
+  programs.nix-ld.enable = true;
 
   services.greetd = {
     enable = true;
@@ -57,7 +51,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git vim wget curl
+    git vim wget curl steam-run
   ];
 
   system.stateVersion = "25.11";
