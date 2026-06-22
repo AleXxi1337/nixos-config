@@ -42,7 +42,9 @@
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${pkgs.hyprland}/bin/Hyprland";
+      command = "${pkgs.writeShellScript "hyprland-session" ''
+        exec ${pkgs.hyprland}/bin/Hyprland > /dev/null 2>&1
+      ''}";
       user = username;
     };
   };
