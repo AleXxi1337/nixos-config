@@ -1,5 +1,7 @@
 { pkgs, hostname, username, ... }:
 {
+  nixpkgs.config.allowUnfree = true;
+
   hardware.enableRedistributableFirmware = true;
 
   networking.hostName = hostname;
