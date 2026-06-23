@@ -40,10 +40,6 @@
   };
 
   programs.hyprland.enable = true;
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [ sqlite ];
-  };
 
   services.greetd = {
     enable = true;
