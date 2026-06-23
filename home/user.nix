@@ -7,5 +7,6 @@
   home.packages = with pkgs; [ 
     kitty
     firefox
+    claude-code
   ];
 }

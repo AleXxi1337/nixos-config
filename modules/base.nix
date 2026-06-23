@@ -52,7 +52,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git vim wget curl steam-run
+    git vim wget curl
   ];
 
   system.stateVersion = "25.11";
