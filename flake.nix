@@ -1,9 +1,9 @@
 {
   description = "My NixOS configs";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
@@ -18,9 +18,13 @@
       url = "github:MrShitFox/happ-nixos";
       flake = false;
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, happ-nixos, ... }:
+  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, happ-nixos, zen-browser, ... }:
   let
     mkHost = { hostname, username, extraModules ? [] }:
       nixpkgs.lib.nixosSystem {
@@ -39,7 +43,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${username} = import ./home/${username}.nix;
-            home-manager.extraSpecialArgs = { inherit username; };
+            home-manager.extraSpecialArgs = {
+              inherit username;
+              zenBrowser = zen-browser.packages.x86_64-linux.default;
+            };
             home-manager.sharedModules = [];
           }
         ] ++ extraModules;
