@@ -1,69 +1,93 @@
-{ username, pkgs, lib, zenBrowser, ... }:
-let
-  hymission = pkgs.hyprlandPlugins.mkHyprlandPlugin {
-    pluginName = "hymission";
-    version    = "master";
-    src = pkgs.fetchzip {
-      url    = "https://github.com/gfhdhytghd/hymission/archive/refs/heads/master.tar.gz";
-      sha256 = "1vh01bgpijlq96jjlb631jq6v2cd3mjl0cbic3sqlid8qwikilah";
-    };
-    nativeBuildInputs = [ pkgs.cmake pkgs.pkg-config ];
-    buildInputs       = [ pkgs.nlohmann_json pkgs.expat ];
-    cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
-    meta = {};
-  };
-in
 {
-  imports = [];
+  username,
+  pkgs,
+  zenBrowser,
+  matuPkg,
+  ...
+}:
+{
+  imports = [ ./corefonts.nix ];
 
   home.username = username;
   home.homeDirectory = "/home/${username}";
-  home.stateVersion = "25.11";
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+    tray = "auto";
+  };
 
-  home.activation.copyOnlyOfficeFonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    mkdir -p $HOME/.local/share/fonts/corefonts
-    cp -f --remove-destination ${pkgs.corefonts}/share/fonts/truetype/*.ttf $HOME/.local/share/fonts/corefonts/
-    chmod 644 $HOME/.local/share/fonts/corefonts/*.ttf
-  '';
+  home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
-    kitty
+    # Browsers
     firefox
     zenBrowser
-    claude-code
-    stow
+    chromium
+
+    # Terminal
+    kitty
+    fzf
+    btop
+    fastfetch
+    oh-my-posh
+
+    # Dev
     neovim
     tree-sitter
     nixd
-    brightnessctl
+    nixfmt
+    ripgrep
+    lazygit
+    claude-code
+    uv
+
+    # Desktop / Wayland
     awww
-    hyprlandPlugins.hyprbars
-    hymission
+    quickshell
+    brightnessctl
     matugen
-    oh-my-posh
-    fastfetch
-    fzf
+    nwg-displays
+
+    #Archives
+    file-roller
+    p7zip
+    unzip
+    zip
+    unrar
+    gzip
+    bzip2
+    xz
+    zstd
+
+    # Apps
     telegram-desktop
     pavucontrol
-    chromium
-    imagemagick
-    jq
-    btop
-    quickshell
     nautilus
+    qalculate-qt
+    onlyoffice-desktopeditors
+    kdePackages.kdeconnect-kde
+
+    # Theming
     nwg-look
     qt6Packages.qt6ct
     libsForQt5.qt5ct
-    kdePackages.kdeconnect-kde
-    qalculate-qt
-    onlyoffice-desktopeditors
     glib
     gsettings-desktop-schemas
     (colloid-gtk-theme.override {
-      colorVariants = [ "dark" "light" ];
+      colorVariants = [
+        "dark"
+        "light"
+      ];
     })
     colloid-icon-theme
     bibata-cursors
+
+    # Utils
+    stow
+    imagemagick
+    jq
+    matuPkg
 
     # Fonts
     roboto

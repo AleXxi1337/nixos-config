@@ -3,7 +3,9 @@
   boot.loader.systemd-boot.enable = true;
 
   boot.initrd.availableKernelModules = [
-    "virtio_blk" "virtio_pci" "virtio_gpu"
+    "virtio_blk"
+    "virtio_pci"
+    "virtio_gpu"
   ];
 
   services.openssh = {

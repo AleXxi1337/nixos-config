@@ -2,14 +2,21 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      pkgsi686Linux = prev.pkgsi686Linux.extend (_: prev32: {
-        openblas = prev32.openblas.overrideAttrs (_: { doCheck = false; });
-      });
+      pkgsi686Linux = prev.pkgsi686Linux.extend (
+        _: prev32: {
+          openblas = prev32.openblas.overrideAttrs (_: {
+            doCheck = false;
+          });
+        }
+      );
     })
   ];
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
     max-jobs = 6;
     substituters = [

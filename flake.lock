@@ -134,6 +134,23 @@
         "type": "github"
       }
     },
+    "matushell-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786440261,
+        "narHash": "sha256-FvtEyHsutZm2xH48tkMMCY0EXOo3/WMcpjwCsPUnBec=",
+        "path": "/home/user/matushell/matushell-cli",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/user/matushell/matushell-cli",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1782116945,
@@ -179,6 +196,7 @@
         "happ-nixos": "happ-nixos",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
+        "matushell-cli": "matushell-cli",
         "nixpkgs": "nixpkgs",
         "zen-browser": "zen-browser"
       }

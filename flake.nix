@@ -22,9 +22,13 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    matushell-cli = {
+      url = "path:/home/user/matushell/matushell-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, happ-nixos, zen-browser, ... }:
+  outputs = { self, nixpkgs, home-manager, disko, lanzaboote, happ-nixos, zen-browser, matushell-cli, ... }:
   let
     mkHost = { hostname, username, extraModules ? [] }:
       nixpkgs.lib.nixosSystem {
@@ -46,6 +50,7 @@
             home-manager.extraSpecialArgs = {
               inherit username;
               zenBrowser = zen-browser.packages.x86_64-linux.default;
+              matuPkg = matushell-cli.packages.x86_64-linux.default;
             };
             home-manager.sharedModules = [];
           }
@@ -57,11 +62,12 @@
       desktop = mkHost {
         hostname = "desktop";
         username = "user";
+        extraModules = [ ./modules/lanzaboote.nix ];
       };
       thinkpad = mkHost {
         hostname = "thinkpad";
         username = "user";
-        extraModules = [ "${happ-nixos}/happ-module.nix" ];
+        extraModules = [ ./modules/lanzaboote.nix "${happ-nixos}/happ-module.nix" ];
       };
       vm = mkHost {
         hostname = "vm";
